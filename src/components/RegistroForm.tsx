@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, PartyPopper, User, School, Award, Phone, Heart } from 'lucide-react';
 
 export default function RegistroForm() {
   const [loading, setLoading] = useState(false);
@@ -30,16 +30,16 @@ export default function RegistroForm() {
       if (result.success) {
         setSuccess(result.folio);
         confetti({
-          particleCount: 150,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#00FFFF', '#E4007C', '#ffffff']
+          particleCount: 200,
+          spread: 90,
+          origin: { y: 0.5 },
+          colors: ['#00E5FF', '#FF0080', '#FFEB3B', '#7C4DFF']
         });
       } else {
-        setError(result.error || 'Ocurrió un error al registrar.');
+        setError(result.error || '¡Ups! Algo salió mal. ¡Inténtalo de nuevo!');
       }
     } catch (err) {
-      setError('Error de conexión con el servidor.');
+      setError('¡Oh no! No pudimos conectar con el servidor.');
     } finally {
       setLoading(false);
     }
@@ -47,129 +47,156 @@ export default function RegistroForm() {
 
   if (success) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md mx-auto p-10 glass rounded-3xl text-center"
-      >
-        <CheckCircle2 className="w-20 h-20 text-aqua mx-auto mb-6" />
-        <h3 className="text-3xl font-bold mb-4">¡Registro Exitoso!</h3>
-        <p className="text-white/70 mb-6">Tu registro ha sido guardado correctamente.</p>
-        <div className="bg-white/5 p-4 rounded-2xl border border-aqua/30">
-          <p className="text-sm text-aqua uppercase tracking-widest mb-1">Tu Folio es:</p>
-          <p className="text-4xl font-mono font-bold text-mexican-pink">{success}</p>
-        </div>
-        <p className="mt-6 text-sm text-white/50">Guarda este folio para el día del evento.</p>
-        <button 
-          onClick={() => setSuccess(null)}
-          className="mt-8 text-aqua underline underline-offset-4 hover:text-white transition-colors"
+      <div className="py-20 px-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          className="max-w-xl mx-auto p-12 glass-light rounded-[3rem] text-center border-4 border-aqua shadow-2xl relative"
         >
-          Registrar a alguien más
-        </button>
-      </motion.div>
+          <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-yellow-400 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
+            <PartyPopper size={48} className="text-white" />
+          </div>
+          <h3 className="text-4xl font-black mb-4 text-slate-800 mt-6">¡YAY! ¡LISTO!</h3>
+          <p className="text-xl text-slate-600 mb-8 font-medium italic">¡Ya eres parte de esta gran aventura!</p>
+          <div className="bg-white p-8 rounded-[2rem] border-4 border-dashed border-mexican-pink shadow-inner">
+            <p className="text-sm text-mexican-pink uppercase font-black tracking-widest mb-2">Este es tu súper número de folio:</p>
+            <p className="text-5xl font-mono font-black text-slate-800">{success}</p>
+          </div>
+          <p className="mt-8 text-slate-500 font-medium">¡Dile a tus papás que guarden este número!</p>
+          <button 
+            onClick={() => setSuccess(null)}
+            className="mt-10 text-aqua font-black text-lg underline underline-offset-8 hover:text-mexican-pink transition-colors"
+          >
+            Registrar a otro amiguito
+          </button>
+        </motion.div>
+      </div>
     );
   }
 
   return (
-    <section id="registro" className="py-20 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="glass p-8 md:p-12 rounded-[3.5rem] border-2 border-aqua/20">
-          <h2 className="text-4xl font-bold text-center mb-2">Formulario de Registro</h2>
-          <p className="text-center text-white/60 mb-10">Únete a la construcción de nuestro municipio</p>
+    <section id="registro" className="py-24 px-4 bg-gradient-to-b from-soft-bg to-white relative">
+      <div className="max-w-3xl mx-auto">
+        <div className="glass-light p-10 md:p-16 rounded-[4rem] border-4 border-white shadow-2xl relative overflow-hidden">
+          {/* Decorative shapes */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-aqua/10 rounded-full translate-x-10 -translate-y-10" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-mexican-pink/10 rounded-full -translate-x-5 translate-y-5" />
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-aqua pl-2">Nombre Completo del Niño/a</label>
+          <div className="text-center mb-12">
+            <h2 className="text-5xl font-black text-slate-800 mb-4">¡Inscríbete Aquí!</h2>
+            <div className="flex justify-center gap-2">
+              <div className="w-12 h-2 bg-aqua rounded-full" />
+              <div className="w-4 h-2 bg-mexican-pink rounded-full" />
+              <div className="w-2 h-2 bg-yellow-400 rounded-full" />
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
+                  <User size={20} className="text-aqua" /> Tu Nombre
+                </label>
                 <input
                   required
                   name="nombre"
-                  placeholder="Juan Perez..."
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-aqua focus:border-transparent outline-none transition-all"
+                  placeholder="¿Cómo te llamas?"
+                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-aqua/20 focus:border-aqua outline-none transition-all placeholder:text-slate-300 font-medium"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-aqua pl-2">Escuela</label>
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
+                  <School size={20} className="text-mexican-pink" /> Tu Escuela
+                </label>
                 <input
                   required
                   name="escuela"
-                  placeholder="Primaria Lazaro Cardenas"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-aqua focus:border-transparent outline-none transition-all"
+                  placeholder="¿En qué escuela vas?"
+                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-mexican-pink/20 focus:border-mexican-pink outline-none transition-all placeholder:text-slate-300 font-medium"
                 />
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-aqua pl-2">Grado</label>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
+                   ¿En qué grado estás?
+                </label>
                 <select 
                   required
                   name="grado"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-aqua focus:border-transparent outline-none transition-all appearance-none"
+                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-aqua/20 focus:border-aqua outline-none transition-all appearance-none font-medium cursor-pointer"
                 >
-                  <option className="bg-[#0a0a0a]" value="">Selecciona grado</option>
-                  <option className="bg-[#0a0a0a]" value="5°">5° Año</option>
-                  <option className="bg-[#0a0a0a]" value="6°">6° Año</option>
+                  <option value="">Selecciona tu año</option>
+                  <option value="5°">5° Año de Primaria</option>
+                  <option value="6°">6° Año de Primaria</option>
                 </select>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-aqua pl-2">Cargo a Postular</label>
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
+                  <Award size={20} className="text-yellow-500" /> ¿Qué quieres ser?
+                </label>
                 <select 
                   required
                   name="cargo"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-aqua focus:border-transparent outline-none transition-all appearance-none"
+                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-mexican-pink/20 focus:border-mexican-pink outline-none transition-all appearance-none font-medium cursor-pointer"
                 >
-                  <option className="bg-[#0a0a0a]" value="">Selecciona cargo</option>
-                  <option className="bg-[#0a0a0a]" value="Alcalde/sa">Alcalde/sa</option>
-                  <option className="bg-[#0a0a0a]" value="Síndica/o">Síndica/o</option>
-                  <option className="bg-[#0a0a0a]" value="Regidora/or">Regidora/or</option>
+                  <option value="">Selecciona un puesto</option>
+                  <option value="Alcalde/sa">Alcalde/sa</option>
+                  <option value="Síndica/o">Síndica/o</option>
+                  <option value="Regidora/or">Regidora/or</option>
                 </select>
-                <p className="text-[10px] text-white/40 px-2 mt-1 italic">
-                  *Nota: Contamos con 11 regidurías con diversas comisiones.
+                <p className="text-xs text-slate-400 px-2 italic">
+                  *Hay 11 regidurías con muchas misiones divertidas.
                 </p>
               </div>
             </div>
 
-            <hr className="border-white/5 my-4" />
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-mexican-pink pl-2">Nombre del Tutor</label>
-                <input
-                  required
-                  name="tutor"
-                  placeholder="María Rodriguez..."
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-mexican-pink focus:border-transparent outline-none transition-all"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-mexican-pink pl-2">Teléfono de Contacto</label>
-                <input
-                  required
-                  name="telefono"
-                  type="tel"
-                  placeholder="784..."
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:ring-2 focus:ring-mexican-pink focus:border-transparent outline-none transition-all"
-                />
+            <div className="p-8 bg-blue-50/50 rounded-[2.5rem] border-2 border-blue-100 space-y-8">
+               <h4 className="text-xl font-black text-blue-600 flex items-center gap-2">
+                 <Heart size={24} className="fill-blue-600" /> Datos de un familiar
+               </h4>
+               <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-3">
+                  <label className="text-lg font-black text-slate-700 pl-2">Nombre de Papá, Mamá o Tutor</label>
+                  <input
+                    required
+                    name="tutor"
+                    placeholder="Nombre completo"
+                    className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all font-medium"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
+                    <Phone size={20} className="text-blue-500" /> Su Teléfono
+                  </label>
+                  <input
+                    required
+                    name="telefono"
+                    type="tel"
+                    placeholder="784..."
+                    className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all font-medium"
+                  />
+                </div>
               </div>
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm text-center bg-red-400/10 p-4 rounded-xl border border-red-400/20">
+              <p className="text-red-500 font-bold text-center bg-red-50 p-6 rounded-2xl border-2 border-red-100">
                 {error}
               </p>
             )}
 
             <button
               disabled={loading}
-              className="w-full btn-primary p-5 rounded-3xl font-bold text-lg flex items-center justify-center gap-3 disabled:opacity-50"
+              className="w-full btn-playful p-6 rounded-[2rem] font-black text-2xl flex items-center justify-center gap-4 disabled:opacity-50 shadow-2xl"
             >
               {loading ? (
                 <>
-                  <Loader2 className="animate-spin" /> Procesando...
+                  <Loader2 className="animate-spin" /> ESTAMOS LISTOS...
                 </>
               ) : (
-                'Completar Registro'
+                '¡ENVIAR MI REGISTRO!'
               )}
             </button>
           </form>

@@ -2,36 +2,40 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ChevronDown, Users, FileText, Calendar, Send } from 'lucide-react';
+import { ChevronDown, GraduationCap, FileHeart, MapPin, Trophy, Cloud } from 'lucide-react';
 
 const sections = [
   {
     id: 'participantes',
-    title: 'Participantes',
-    icon: <Users className="text-aqua" />,
-    content: 'Niñas y niños de 5° y 6° año de primaria del municipio de Papantla.'
+    title: '¿Quiénes pueden participar?',
+    icon: <GraduationCap size={32} className="text-white" />,
+    color: 'bg-aqua',
+    content: '¡Buscamos niñas y niños valientes de 5° y 6° año de todas las primarias de nuestro municipio!'
   },
   {
     id: 'requisitos',
-    title: 'Requisitos',
-    icon: <FileText className="text-mexican-pink" />,
+    title: '¿Qué necesito traer?',
+    icon: <FileHeart size={32} className="text-white" />,
+    color: 'bg-mexican-pink',
     content: [
-      'INE del tutor (Copia)',
-      'Constancia de estudios vigente',
-      'Aviso de consentimiento e integridad (no ser familiar de servidores públicos)',
+      'Documento de mamá o papá (INE)',
+      'Tu constancia de estudios',
+      'Un permiso firmado donde digas que no eres familiar de funcionarios',
     ]
   },
   {
     id: 'cita',
-    title: 'Cita Presencial',
-    icon: <Calendar className="text-aqua" />,
-    content: '24 de abril en el Parque Kiwikgolo (9:00 a 11:00 hrs) para elaborar el escrito de 1 a 2 cuartillas.'
+    title: '¿Dónde y cuándo es?',
+    icon: <MapPin size={32} className="text-white" />,
+    color: 'bg-yellow-400',
+    content: 'Te esperamos el 24 de abril en el Parque Kiwikgolo (9:00 a 11:00 AM). ¡Escribiremos juntos una pequeña historia sobre nuestro Papantla!'
   },
   {
     id: 'resultados',
-    title: 'Resultados',
-    icon: <Send className="text-mexican-pink" />,
-    content: '24 de abril a las 12:00 hrs en el Kiwikgolo.'
+    title: '¡Descubre los resultados!',
+    icon: <Trophy size={32} className="text-white" />,
+    color: 'bg-purple-500',
+    content: '¡Ese mismo día (24 de abril) a las 12:00 PM daremos a conocer quiénes serán nuestros pequeños gobernantes!'
   }
 ];
 
@@ -39,27 +43,46 @@ export default function Bases() {
   const [openId, setOpenId] = useState<string | null>('participantes');
 
   return (
-    <section className="py-20 px-4 bg-[#0a0a0a]">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gradient">Bases de la Convocatoria</h2>
+    <section className="py-24 px-4 relative overflow-hidden">
+      <div className="absolute top-0 right-0 text-aqua/5 -translate-y-1/2 translate-x-1/4">
+        <Cloud size={400} />
+      </div>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl md:text-6xl font-black mb-4 text-slate-800 tracking-tight">
+            Pasos para la <span className="text-mexican-pink underline decoration-aqua">Aventura</span>
+          </h2>
+          <p className="text-xl text-slate-500 font-medium italic">¡Es muy fácil ser parte del cambio!</p>
+        </motion.div>
         
-        <div className="space-y-4">
-          {sections.map((section) => (
-            <div key={section.id} className="glass rounded-3xl overflow-hidden">
+        <div className="space-y-6">
+          {sections.map((section, index) => (
+            <motion.div 
+              key={section.id}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-light rounded-[2.5rem] overflow-hidden shadow-xl"
+            >
               <button
                 onClick={() => setOpenId(openId === section.id ? null : section.id)}
-                className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                className="w-full p-6 md:p-8 flex items-center justify-between text-left transition-all"
                 aria-expanded={openId === section.id}
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                <div className="flex items-center gap-6">
+                  <div className={`w-16 h-16 rounded-[1.5rem] ${section.color} flex items-center justify-center shadow-lg rotate-3`}>
                     {section.icon}
                   </div>
-                  <span className="text-xl font-semibold text-white">{section.title}</span>
+                  <span className="text-2xl font-black text-slate-800">{section.title}</span>
                 </div>
-                <ChevronDown 
-                  className={`transition-transform duration-300 ${openId === section.id ? 'rotate-180' : ''}`}
-                />
+                <div className={`p-2 rounded-full border-2 border-slate-200 transition-transform ${openId === section.id ? 'rotate-180 bg-slate-100' : ''}`}>
+                  <ChevronDown size={28} className="text-slate-500" />
+                </div>
               </button>
               
               <AnimatePresence>
@@ -70,21 +93,24 @@ export default function Bases() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="p-6 pt-0 text-white/70 border-t border-white/5">
+                    <div className="p-8 pt-0 text-xl text-slate-600 font-medium leading-relaxed border-t border-slate-100">
                       {Array.isArray(section.content) ? (
-                        <ul className="list-disc pl-6 space-y-2">
-                          {section.content.map((item, index) => (
-                            <li key={index}>{item}</li>
+                        <div className="grid md:grid-cols-2 gap-4 mt-4">
+                          {section.content.map((item, i) => (
+                            <div key={i} className="flex items-center gap-3 bg-white/40 p-4 rounded-2xl border border-white/60">
+                              <div className="w-3 h-3 rounded-full bg-aqua" />
+                              {item}
+                            </div>
                           ))}
-                        </ul>
+                        </div>
                       ) : (
-                        <p>{section.content}</p>
+                        <p className="mt-4">{section.content}</p>
                       )}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
