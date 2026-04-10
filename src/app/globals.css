@@ -3,13 +3,14 @@
 @theme {
   --color-aqua: #00E5FF;
   --color-mexican-pink: #FF0080;
-  --color-soft-bg: #F0FDFF;
+  --color-soft-bg: #FFFDF5;
+  --color-beige-warm: #F5F0DC;
   --color-glass-white: rgba(255, 255, 255, 0.7);
 }
 
 :root {
-  --background: #F0FDFF;
-  --foreground: #1A3636;
+  --background: #FFFDF5;
+  --foreground: #4A3728;
 }
 
 body {
@@ -20,11 +21,11 @@ body {
 }
 
 .glass-light {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  border: 2px solid white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
 .text-gradient {
@@ -37,26 +38,25 @@ body {
   background: linear-gradient(135deg, #00E5FF, #FF0080);
   color: white;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border-bottom: 4px solid rgba(0,0,0,0.2);
+  border-bottom: 5px solid rgba(0,0,0,0.2);
 }
 
 .btn-playful:hover {
-  transform: scale(1.05) rotate(-1deg);
-  box-shadow: 0 15px 30px rgba(255, 0, 128, 0.3);
-  filter: brightness(1.1);
+  transform: scale(1.05) rotate(-0.5deg);
+  box-shadow: 0 15px 35px rgba(255, 0, 128, 0.3);
 }
 
 .btn-playful:active {
-  transform: translateY(2px);
+  transform: translateY(3px);
   border-bottom-width: 2px;
 }
 
 .blob {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, rgba(255,0,128,0.1) 100%);
-  filter: blur(80px);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,200,0,0.1) 0%, rgba(255,0,128,0.05) 100%);
+  filter: blur(100px);
   z-index: -1;
   border-radius: 50%;
 }

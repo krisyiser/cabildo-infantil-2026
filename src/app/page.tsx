@@ -5,9 +5,9 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#FFFDF5]">
       <Hero />
-      <div className="bg-gradient-to-b from-black to-[#0a0a0a]">
+      <div className="bg-gradient-to-b from-[#FFFDF5] via-[#FCF8E8] to-[#F5F0DC]">
         <Bases />
         <RegistroForm />
       </div>
