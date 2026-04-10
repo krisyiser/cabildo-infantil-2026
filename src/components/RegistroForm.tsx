@@ -1,45 +1,100 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Loader2, PartyPopper, User, School, Award, Phone, Heart } from 'lucide-react';
+import { Loader2, PartyPopper, User, School, Award, Phone, Heart, Camera, Upload, CheckCircle2, ShieldCheck, FileText } from 'lucide-react';
+
+const regidurias = [
+  { id: 1, name: "Regidor/a Primero/a", mission: "Turismo, desarrollo social, humano y regional." },
+  { id: 2, name: "Regidor/a Segundo/a", mission: "Salud y asistencia pública, ciencia y tecnología." },
+  { id: 3, name: "Regidor/a Tercero/a", mission: "Impulso a la juventud, asuntos religiosos." },
+  { id: 4, name: "Regidor/a Cuarto/a", mission: "Participación ciudadana y vecinal, desempeño, planeación del desarrollo municipal." },
+  { id: 5, name: "Regidor/a Quinto/a", mission: "Promoción y defensa de los derechos humanos de la niñez y la familia." },
+  { id: 6, name: "Regidor/a Sexto/a", mission: "Ornato, parques, jardines y alumbrado, desarrollo económico." },
+  { id: 7, name: "Regidor/a Séptimo/a", mission: "Hacienda y patrimonio municipal, policía y prevención del delito, comunicaciones y obra pública." },
+  { id: 8, name: "Regidor/a Octavo/a", mission: "Limpia pública, transparencia y acceso a la información, asuntos indígenas." },
+  { id: 9, name: "Regidor/a Noveno/a", mission: "Educación, Recreación y Cultura, Actos Cívicos, Fomento Deportivo, Fomento Forestal, Ecología y Medio Ambiente, Bibliotecas, Fomento a la Lectura y Alfabetización, así como Bienestar Animal." },
+  { id: 10, name: "Regidor/a Décimo/a", mission: "Comercio, Central de Abasto, Mercados y Rastros, Tránsito y Vialidad, y Protección Civil." },
+  { id: 11, name: "Regidor/a Décimo/a primero/a", mission: "Igualdad de Género, Asentamientos Humanos, Fraccionamientos, Licencias, Regulación y Tenencia de la Tierra, así como Agua Potable, Drenaje, Alcantarillado, Tratamiento y Disposición de Aguas Residuales." }
+];
+
+const cargos = [
+  { id: 'alcalde', name: 'Alcalde/sa', mission: 'Dirigir la administración pública municipal.' },
+  { id: 'sindico', name: 'Síndico/a', mission: 'Hacienda y patrimonio municipal, gobernación, reglamentos y circulares, fomento agropecuario.' },
+  { id: 'regidor', name: 'Regidor/a', mission: 'Diversas misiones especiales (Podrás elegir una abajo)' }
+];
 
 export default function RegistroForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  const [selectedCargo, setSelectedCargo] = useState('');
+  const [selectedRegiduria, setSelectedRegiduria] = useState<number | null>(null);
+  
+  const [ineFile, setIneFile] = useState<string | null>(null);
+  const [constanciaFile, setConstanciaFile] = useState<string | null>(null);
+
+  const fileToDataUri = (file: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => resolve(event.target?.result as string);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'ine' | 'constancia') => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("La imagen es muy pesada. Máximo 5MB.");
+        return;
+      }
+      const uri = await fileToDataUri(file);
+      if (type === 'ine') setIneFile(uri);
+      else setConstanciaFile(uri);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!ineFile || !constanciaFile) {
+        setError("Por favor sube las fotos de tu INE y Constancia.");
+        return;
+    }
+
     setLoading(true);
     setError(null);
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    
+    // Supplement with file URIs
+    const payload = {
+        ...data,
+        ine: ineFile,
+        constancia: constanciaFile,
+        regiduria_id: selectedRegiduria,
+        regiduria_name: selectedRegiduria ? regidurias.find(r => r.id === selectedRegiduria)?.name : null
+    };
 
     try {
       const res = await fetch('/api/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       const result = await res.json();
 
       if (result.success) {
         setSuccess(result.folio);
-        confetti({
-          particleCount: 200,
-          spread: 90,
-          origin: { y: 0.5 },
-          colors: ['#00E5FF', '#FF0080', '#FFEB3B', '#7C4DFF']
-        });
+        confetti({ particleCount: 200, spread: 90, origin: { y: 0.5 } });
       } else {
-        setError(result.error || '¡Ups! Algo salió mal. ¡Inténtalo de nuevo!');
+        setError(result.error || '¡Ups! Algo salió mal.');
       }
     } catch (err) {
-      setError('¡Oh no! No pudimos conectar con el servidor.');
+      setError('Error de conexión.');
     } finally {
       setLoading(false);
     }
@@ -48,156 +103,161 @@ export default function RegistroForm() {
   if (success) {
     return (
       <div className="py-20 px-4">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          className="max-w-xl mx-auto p-12 glass-light rounded-[3rem] text-center border-4 border-aqua shadow-2xl relative"
-        >
-          <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-yellow-400 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
-            <PartyPopper size={48} className="text-white" />
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="max-w-xl mx-auto p-12 glass-light rounded-[3rem] text-center border-4 border-aqua shadow-2xl relative">
+          <PartyPopper size={64} className="text-mexican-pink mx-auto mb-6" />
+          <h3 className="text-4xl font-black mb-4 text-slate-800 tracking-tighter">¡REGISTRO EXITOSO!</h3>
+          <p className="text-xl text-slate-600 mb-8 font-medium">¡Te vemos el 24 de abril en el Parque Kiwikgolo!</p>
+          <div className="bg-[#FFFDF5] p-10 rounded-[2.5rem] border-4 border-dashed border-aqua">
+            <p className="text-xs text-aqua uppercase font-black tracking-widest mb-2">Tu número de folio oficial:</p>
+            <p className="text-6xl font-mono font-black text-slate-800">{success}</p>
           </div>
-          <h3 className="text-4xl font-black mb-4 text-slate-800 mt-6">¡YAY! ¡LISTO!</h3>
-          <p className="text-xl text-slate-600 mb-8 font-medium italic">¡Ya eres parte de esta gran aventura!</p>
-          <div className="bg-white p-8 rounded-[2rem] border-4 border-dashed border-mexican-pink shadow-inner">
-            <p className="text-sm text-mexican-pink uppercase font-black tracking-widest mb-2">Este es tu súper número de folio:</p>
-            <p className="text-5xl font-mono font-black text-slate-800">{success}</p>
-          </div>
-          <p className="mt-8 text-slate-500 font-medium">¡Dile a tus papás que guarden este número!</p>
-          <button 
-            onClick={() => setSuccess(null)}
-            className="mt-10 text-aqua font-black text-lg underline underline-offset-8 hover:text-mexican-pink transition-colors"
-          >
-            Registrar a otro amiguito
-          </button>
+          <button onClick={() => setSuccess(null)} className="mt-10 text-mexican-pink font-black underline underline-offset-8">Registrar otro niño/a</button>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <section id="registro" className="py-24 px-4 bg-gradient-to-b from-soft-bg to-white relative">
-      <div className="max-w-3xl mx-auto">
-        <div className="glass-light p-10 md:p-16 rounded-[4rem] border-4 border-white shadow-2xl relative overflow-hidden">
-          {/* Decorative shapes */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-aqua/10 rounded-full translate-x-10 -translate-y-10" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-mexican-pink/10 rounded-full -translate-x-5 translate-y-5" />
-
-          <div className="text-center mb-12">
-            <h2 className="text-5xl font-black text-slate-800 mb-4">¡Inscríbete Aquí!</h2>
-            <div className="flex justify-center gap-2">
-              <div className="w-12 h-2 bg-aqua rounded-full" />
-              <div className="w-4 h-2 bg-mexican-pink rounded-full" />
-              <div className="w-2 h-2 bg-yellow-400 rounded-full" />
-            </div>
+    <section id="registro" className="py-24 px-4 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto">
+        <div className="glass-light p-8 md:p-16 rounded-[4rem] border-4 border-white shadow-2xl">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-black text-slate-800 mb-4">¡Inicia la Aventura!</h2>
+            <p className="text-slate-500 font-bold italic">Completa todos los campos con ayuda de tus papás</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-12">
+            {/* 1. Datos del Niño */}
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-3">
-                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
-                  <User size={20} className="text-aqua" /> Tu Nombre
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700">
+                  <User className="text-aqua" /> Nombre Completo
                 </label>
-                <input
-                  required
-                  name="nombre"
-                  placeholder="¿Cómo te llamas?"
-                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-aqua/20 focus:border-aqua outline-none transition-all placeholder:text-slate-300 font-medium"
-                />
+                <input required name="nombre" placeholder="Nombre completo del niño/a" className="w-full bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-aqua outline-none transition-all font-bold" />
               </div>
               <div className="space-y-3">
-                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
-                  <School size={20} className="text-mexican-pink" /> Tu Escuela
+                <label className="flex items-center gap-2 text-lg font-black text-slate-700">
+                  <School className="text-mexican-pink" /> Escuela y Grado
                 </label>
-                <input
-                  required
-                  name="escuela"
-                  placeholder="¿En qué escuela vas?"
-                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-mexican-pink/20 focus:border-mexican-pink outline-none transition-all placeholder:text-slate-300 font-medium"
-                />
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
-                   ¿En qué grado estás?
-                </label>
-                <select 
-                  required
-                  name="grado"
-                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-aqua/20 focus:border-aqua outline-none transition-all appearance-none font-medium cursor-pointer"
-                >
-                  <option value="">Selecciona tu año</option>
-                  <option value="5°">5° Año de Primaria</option>
-                  <option value="6°">6° Año de Primaria</option>
-                </select>
-              </div>
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
-                  <Award size={20} className="text-yellow-500" /> ¿Qué quieres ser?
-                </label>
-                <select 
-                  required
-                  name="cargo"
-                  className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-mexican-pink/20 focus:border-mexican-pink outline-none transition-all appearance-none font-medium cursor-pointer"
-                >
-                  <option value="">Selecciona un puesto</option>
-                  <option value="Alcalde/sa">Alcalde/sa</option>
-                  <option value="Síndica/o">Síndica/o</option>
-                  <option value="Regidora/or">Regidora/or</option>
-                </select>
-                <p className="text-xs text-slate-400 px-2 italic">
-                  *Hay 11 regidurías con muchas misiones divertidas.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-8 bg-blue-50/50 rounded-[2.5rem] border-2 border-blue-100 space-y-8">
-               <h4 className="text-xl font-black text-blue-600 flex items-center gap-2">
-                 <Heart size={24} className="fill-blue-600" /> Datos de un familiar
-               </h4>
-               <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <label className="text-lg font-black text-slate-700 pl-2">Nombre de Papá, Mamá o Tutor</label>
-                  <input
-                    required
-                    name="tutor"
-                    placeholder="Nombre completo"
-                    className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all font-medium"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="flex items-center gap-2 text-lg font-black text-slate-700 pl-2">
-                    <Phone size={20} className="text-blue-500" /> Su Teléfono
-                  </label>
-                  <input
-                    required
-                    name="telefono"
-                    type="tel"
-                    placeholder="784..."
-                    className="w-full bg-white border-2 border-slate-100 rounded-2xl p-5 text-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all font-medium"
-                  />
+                <div className="flex gap-4">
+                  <input required name="escuela" placeholder="Escuela" className="flex-1 bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-mexican-pink outline-none font-bold" />
+                  <select required name="grado" className="w-[120px] bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-mexican-pink outline-none font-bold">
+                    <option value="5°">5°</option>
+                    <option value="6°">6°</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            {error && (
-              <p className="text-red-500 font-bold text-center bg-red-50 p-6 rounded-2xl border-2 border-red-100">
-                {error}
-              </p>
-            )}
+            <hr className="border-slate-100" />
 
-            <button
-              disabled={loading}
-              className="w-full btn-playful p-6 rounded-[2rem] font-black text-2xl flex items-center justify-center gap-4 disabled:opacity-50 shadow-2xl"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="animate-spin" /> ESTAMOS LISTOS...
-                </>
-              ) : (
-                '¡ENVIAR MI REGISTRO!'
-              )}
+            {/* 2. Seleccion de Cargo */}
+            <div className="space-y-8">
+                <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+                    <Award className="text-yellow-500" /> ¿Qué cargo quieres ocupar?
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {cargos.map((cargo) => (
+                        <button
+                            key={cargo.id}
+                            type="button"
+                            onClick={() => setSelectedCargo(cargo.id)}
+                            className={`p-6 rounded-[2rem] text-left transition-all border-4 ${selectedCargo === cargo.id ? 'bg-aqua/10 border-aqua' : 'bg-white border-white hover:border-slate-100'}`}
+                        >
+                            <input type="radio" name="cargo" value={cargo.name} checked={selectedCargo === cargo.id} className="hidden" readOnly />
+                            <p className="font-black text-xl mb-2 text-slate-800">{cargo.name}</p>
+                            <p className="text-xs text-slate-500 font-medium leading-relaxed">{cargo.mission}</p>
+                        </button>
+                    ))}
+                </div>
+
+                <AnimatePresence>
+                    {selectedCargo === 'regidor' && (
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="space-y-6 pt-4">
+                            <h4 className="font-black text-mexican-pink text-xl">Escoge tu Regiduría:</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {regidurias.map((reg) => (
+                                    <button
+                                        key={reg.id}
+                                        type="button"
+                                        onClick={() => setSelectedRegiduria(reg.id)}
+                                        className={`p-6 rounded-3xl text-left border-4 transition-all ${selectedRegiduria === reg.id ? 'bg-mexican-pink/5 border-mexican-pink' : 'bg-white border-white hover:border-slate-100'}`}
+                                    >
+                                        <p className="font-black text-slate-800">{reg.name}</p>
+                                        <p className="text-[11px] text-slate-500 font-medium">{reg.mission}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            <hr className="border-slate-100" />
+
+            {/* 3. Documentos */}
+            <div className="space-y-8">
+                <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+                    <Camera className="text-aqua" /> Documentos Importantes
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8 text-center">
+                    <div className="space-y-4">
+                        <p className="font-black text-slate-700">1. INE del Tutor (Frente)</p>
+                        <label className={`block relative group cursor-pointer border-4 border-dashed rounded-[2.5rem] p-10 transition-all ${ineFile ? 'border-green-400 bg-green-50' : 'border-slate-200 bg-white hover:border-aqua'}`}>
+                            <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileChange(e, 'ine')} className="hidden" />
+                            {ineFile ? <CheckCircle2 size={48} className="text-green-500 mx-auto" /> : <Camera size={48} className="text-slate-300 group-hover:text-aqua mx-auto" />}
+                            <p className="mt-4 font-bold text-slate-400 uppercase text-xs tracking-widest">{ineFile ? '¡LISTO!' : 'SUBIR O TOMAR FOTO'}</p>
+                        </label>
+                    </div>
+                    <div className="space-y-4">
+                        <p className="font-black text-slate-700">2. Constancia de Estudios</p>
+                        <label className={`block relative group cursor-pointer border-4 border-dashed rounded-[2.5rem] p-10 transition-all ${constanciaFile ? 'border-green-400 bg-green-50' : 'border-slate-200 bg-white hover:border-mexican-pink'}`}>
+                            <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileChange(e, 'constancia')} className="hidden" />
+                            {constanciaFile ? <CheckCircle2 size={48} className="text-green-500 mx-auto" /> : <Camera size={48} className="text-slate-300 group-hover:text-mexican-pink mx-auto" />}
+                            <p className="mt-4 font-bold text-slate-400 uppercase text-xs tracking-widest">{constanciaFile ? '¡LISTO!' : 'SUBIR O TOMAR FOTO'}</p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <hr className="border-slate-100" />
+
+            {/* 4. Contacto y Términos */}
+            <div className="space-y-8">
+                <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+                    <ShieldCheck className="text-green-500" /> Autorizaciones
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                        <label className="text-lg font-black text-slate-700 pl-2">Nombre del Tutor</label>
+                        <input required name="tutor" placeholder="Papá, Mamá o Tutor" className="w-full bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-green-400 outline-none font-bold" />
+                    </div>
+                    <div className="space-y-3">
+                        <label className="text-lg font-black text-slate-700 pl-2">Teléfono</label>
+                        <input required name="telefono" type="tel" placeholder="784..." className="w-full bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-green-400 outline-none font-bold" />
+                    </div>
+                </div>
+
+                <div className="space-y-4 bg-white/50 p-8 rounded-[2.5rem] border-2 border-slate-100">
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
+                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">He leído la convocatoria completa y acepto las bases.</span>
+                    </label>
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
+                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">Acepto términos y condiciones de uso de imagen.</span>
+                    </label>
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
+                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">Aviso de consentimiento informado.</span>
+                    </label>
+                </div>
+            </div>
+
+            {error && <p className="text-red-500 font-bold text-center bg-red-50 p-6 rounded-3xl border-4 border-red-100">{error}</p>}
+
+            <button disabled={loading} className="w-full btn-playful p-8 rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 disabled:opacity-50 shadow-2xl">
+                {loading ? <><Loader2 className="animate-spin" /> PROCESANDO TU REGISTRO...</> : '¡ENVIAR MI REGISTRO!'}
             </button>
           </form>
         </div>
