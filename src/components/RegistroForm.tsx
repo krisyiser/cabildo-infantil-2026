@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Loader2, PartyPopper, User, School, Award, Phone, Heart, Camera, Upload, CheckCircle2, ShieldCheck, FileText } from 'lucide-react';
+import { Loader2, PartyPopper, User, School, Award, Phone, Heart, Camera, CheckCircle2, ShieldCheck, Info, X } from 'lucide-react';
 
 const regidurias = [
   { id: 1, name: "Regidor/a Primero/a", mission: "Turismo, desarrollo social, humano y regional." },
@@ -25,6 +25,27 @@ const cargos = [
   { id: 'regidor', name: 'Regidor/a', mission: 'Diversas misiones especiales (Podrás elegir una abajo)' }
 ];
 
+const LegalModal = ({ title, content, isOpen, onClose }: { title: string, content: string, isOpen: boolean, onClose: () => void }) => (
+    <AnimatePresence>
+        {isOpen && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6" onClick={onClose}>
+                <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-2xl relative border-4 border-aqua" onClick={e => e.stopPropagation()}>
+                    <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-mexican-pink transition-colors">
+                        <X size={24} />
+                    </button>
+                    <h4 className="text-2xl font-black text-slate-800 mb-4 pr-10">{title}</h4>
+                    <p className="text-slate-600 font-medium leading-relaxed italic border-l-4 border-mexican-pink pl-4 bg-slate-50 p-4 rounded-xl">
+                        "{content}"
+                    </p>
+                    <button onClick={onClose} className="w-full mt-6 bg-aqua text-white font-black py-4 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+                        Entendido
+                    </button>
+                </motion.div>
+            </motion.div>
+        )}
+    </AnimatePresence>
+);
+
 export default function RegistroForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -35,6 +56,9 @@ export default function RegistroForm() {
   
   const [ineFile, setIneFile] = useState<string | null>(null);
   const [constanciaFile, setConstanciaFile] = useState<string | null>(null);
+
+  // Legal Modals State
+  const [legalId, setLegalId] = useState<'imagen' | 'consentimiento' | null>(null);
 
   const fileToDataUri = (file: File): Promise<string> => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -69,7 +93,6 @@ export default function RegistroForm() {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     
-    // Supplement with file URIs
     const payload = {
         ...data,
         ine: ineFile,
@@ -119,6 +142,21 @@ export default function RegistroForm() {
 
   return (
     <section id="registro" className="py-24 px-4 relative overflow-hidden">
+      
+      {/* Legal Disclaimer Modals */}
+      <LegalModal 
+        isOpen={legalId === 'imagen'} 
+        onClose={() => setLegalId(null)}
+        title="Términos de Uso de Imagen"
+        content="Al aceptar e ingresar a la convocatoria, los padres o tutores legales otorgan su consentimiento expreso para el uso de la imagen de los menores de edad en notas de prensa, informes oficiales, redes sociales gubernamentales y usos administrativos relacionados con el evento 'Cabildo Infantil por un Día 2026'."
+      />
+      <LegalModal 
+        isOpen={legalId === 'consentimiento'} 
+        onClose={() => setLegalId(null)}
+        title="Aviso de Consentimiento Informado"
+        content="Al marcar esta casilla, se acepta haber leído y comprendido que este es un ejercicio de participación ciudadana y educación cívica. El evento no pretende generar posturas políticas ni partidistas y es meramente un acto recreativo para fomentar la convivencia entre los niños y el amor por su municipio de Papantla."
+      />
+
       <div className="max-w-4xl mx-auto">
         <div className="glass-light p-8 md:p-16 rounded-[4rem] border-4 border-white shadow-2xl">
           <div className="text-center mb-16">
@@ -131,13 +169,13 @@ export default function RegistroForm() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-3">
                 <label className="flex items-center gap-2 text-lg font-black text-slate-700">
-                  <User className="text-aqua" /> Nombre Completo
+                  <User className="text-aqua" size={20} /> Nombre Completo
                 </label>
                 <input required name="nombre" placeholder="Nombre completo del niño/a" className="w-full bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-aqua outline-none transition-all font-bold" />
               </div>
               <div className="space-y-3">
                 <label className="flex items-center gap-2 text-lg font-black text-slate-700">
-                  <School className="text-mexican-pink" /> Escuela y Grado
+                  <School className="text-mexican-pink" size={20} /> Escuela y Grado
                 </label>
                 <div className="flex gap-4">
                   <input required name="escuela" placeholder="Escuela" className="flex-1 bg-white border-4 border-slate-50 rounded-[2rem] p-6 text-xl focus:border-mexican-pink outline-none font-bold" />
@@ -154,7 +192,7 @@ export default function RegistroForm() {
             {/* 2. Seleccion de Cargo */}
             <div className="space-y-8">
                 <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
-                    <Award className="text-yellow-500" /> ¿Qué cargo quieres ocupar?
+                    <Award className="text-yellow-500" size={24} /> ¿Qué cargo quieres ocupar?
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {cargos.map((cargo) => (
@@ -198,7 +236,7 @@ export default function RegistroForm() {
             {/* 3. Documentos */}
             <div className="space-y-8">
                 <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
-                    <Camera className="text-aqua" /> Documentos Importantes
+                    <Camera className="text-aqua" size={24} /> Documentos Importantes
                 </h3>
                 <div className="grid md:grid-cols-2 gap-8 text-center">
                     <div className="space-y-4">
@@ -225,7 +263,7 @@ export default function RegistroForm() {
             {/* 4. Contacto y Términos */}
             <div className="space-y-8">
                 <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
-                    <ShieldCheck className="text-green-500" /> Autorizaciones
+                    <ShieldCheck className="text-green-500" size={24} /> Autorizaciones
                 </h3>
                 <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-3">
@@ -238,19 +276,29 @@ export default function RegistroForm() {
                     </div>
                 </div>
 
-                <div className="space-y-4 bg-white/50 p-8 rounded-[2.5rem] border-2 border-slate-100">
+                <div className="space-y-6 bg-white/50 p-8 rounded-[2.5rem] border-2 border-slate-100">
                     <label className="flex items-start gap-4 cursor-pointer group">
                         <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
                         <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">He leído la convocatoria completa y acepto las bases.</span>
                     </label>
-                    <label className="flex items-start gap-4 cursor-pointer group">
-                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
-                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">Acepto términos y condiciones de uso de imagen.</span>
-                    </label>
-                    <label className="flex items-start gap-4 cursor-pointer group">
-                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink" />
-                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-800">Aviso de consentimiento informado.</span>
-                    </label>
+                    <div className="flex items-start gap-4 group">
+                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink cursor-pointer" />
+                        <div className="text-sm font-bold text-slate-600 group-hover:text-slate-800 flex flex-wrap items-center gap-1">
+                            Acepto términos y condiciones de uso de imagen.
+                            <button type="button" onClick={() => setLegalId('imagen')} className="text-aqua flex items-center gap-1 hover:underline ml-1">
+                                <Info size={14} /> Leer más
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-4 group">
+                        <input required type="checkbox" className="mt-1 w-6 h-6 rounded-lg accent-mexican-pink cursor-pointer" />
+                        <div className="text-sm font-bold text-slate-600 group-hover:text-slate-800 flex flex-wrap items-center gap-1">
+                            Aviso de consentimiento informado.
+                            <button type="button" onClick={() => setLegalId('consentimiento')} className="text-aqua flex items-center gap-1 hover:underline ml-1">
+                                <Info size={14} /> Leer más
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
