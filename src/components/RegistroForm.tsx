@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Loader2, PartyPopper, User, School, Award, Phone, Heart, Camera, CheckCircle2, ShieldCheck, Info, X } from 'lucide-react';
+import { Loader2, PartyPopper, User, School, Award, Phone, Heart, Camera, CheckCircle2, ShieldCheck, Info, X, AlertCircle } from 'lucide-react';
 
 const regidurias = [
   { id: 1, name: "Regidor/a Primero/a", mission: "Turismo, desarrollo social, humano y regional." },
@@ -24,6 +24,8 @@ const cargos = [
   { id: 'sindico', name: 'Síndico/a', mission: 'Hacienda y patrimonio municipal, gobernación, reglamentos y circulares, fomento agropecuario.' },
   { id: 'regidor', name: 'Regidor/a', mission: 'Diversas misiones especiales (Podrás elegir una abajo)' }
 ];
+
+const LIMIT_PER_CARGO = 10;
 
 const LegalModal = ({ title, content, isOpen, onClose }: { title: string, content: string, isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
@@ -48,17 +50,59 @@ const LegalModal = ({ title, content, isOpen, onClose }: { title: string, conten
 
 export default function RegistroForm() {
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   const [selectedCargo, setSelectedCargo] = useState('');
   const [selectedRegiduria, setSelectedRegiduria] = useState<number | null>(null);
   
+  const [counts, setCounts] = useState<{ [key: string]: number }>({});
+  
   const [ineFile, setIneFile] = useState<string | null>(null);
   const [constanciaFile, setConstanciaFile] = useState<string | null>(null);
 
-  // Legal Modals State
   const [legalId, setLegalId] = useState<'imagen' | 'consentimiento' | null>(null);
+
+  // Fetch current counts
+  useEffect(() => {
+    async function fetchCounts() {
+      try {
+        const owner = "krisyiser";
+        const repo = "cabildo-infantil-2026";
+        const path = 'data/inscritos.json';
+        const res = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          const newCounts: { [key: string]: number } = {};
+          data.forEach((item: any) => {
+            const key = item.cargo === 'Regidor/a' ? `reg-${item.regiduria_id}` : item.cargo;
+            newCounts[key] = (newCounts[key] || 0) + 1;
+          });
+          setCounts(newCounts);
+        }
+      } catch (err) {
+        console.error("Error fetching counts");
+      } finally {
+        setInitialLoading(false);
+      }
+    }
+    fetchCounts();
+  }, []);
+
+  const isFull = (cargoName: string, regId?: number) => {
+    if (cargoName === 'Regidor/a' && regId) {
+        return (counts[`reg-${regId}`] || 0) >= LIMIT_PER_CARGO;
+    }
+    return (counts[cargoName] || 0) >= LIMIT_PER_CARGO;
+  };
+
+  const allFull = cargos.every(c => {
+    if (c.id === 'regidor') {
+        return regidurias.every(r => isFull('Regidor/a', r.id));
+    }
+    return isFull(c.name);
+  });
 
   const fileToDataUri = (file: File): Promise<string> => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -82,6 +126,10 @@ export default function RegistroForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (selectedCargo === 'regidor' && !selectedRegiduria) {
+        setError("Por favor escoge una regiduria.");
+        return;
+    }
     if (!ineFile || !constanciaFile) {
         setError("Por favor sube las fotos de tu INE y Constancia.");
         return;
@@ -123,6 +171,27 @@ export default function RegistroForm() {
     }
   };
 
+  if (initialLoading) return (
+      <div className="py-40 flex flex-col items-center gap-4">
+          <Loader2 className="animate-spin text-aqua" size={48} />
+          <p className="font-black text-slate-400 uppercase tracking-widest text-xs">Preparando la aventura...</p>
+      </div>
+  );
+
+  if (allFull) return (
+    <div className="py-24 px-4">
+        <div className="max-w-2xl mx-auto glass-light p-16 rounded-[4rem] text-center border-8 border-white shadow-2xl">
+            <Heart size={80} className="text-mexican-pink mx-auto mb-6 fill-mexican-pink/20" />
+            <h3 className="text-4xl font-black text-slate-800 mb-6 tracking-tighter">¡GRACIAS POR TU INTERÉS!</h3>
+            <p className="text-xl text-slate-600 font-medium leading-relaxed italic">
+                Hemos alcanzado el cupo máximo de registros para el Cabildo Infantil 2026. ¡Estamos muy emocionados por la gran respuesta de todos ustedes! 
+                <br /><br />
+                ¡Nos vemos en el próximo evento para seguir construyendo nuestro municipio!
+            </p>
+        </div>
+    </div>
+  );
+
   if (success) {
     return (
       <div className="py-20 px-4">
@@ -143,7 +212,6 @@ export default function RegistroForm() {
   return (
     <section id="registro" className="py-24 px-4 relative overflow-hidden">
       
-      {/* Legal Disclaimer Modals */}
       <LegalModal 
         isOpen={legalId === 'imagen'} 
         onClose={() => setLegalId(null)}
@@ -195,18 +263,25 @@ export default function RegistroForm() {
                     <Award className="text-yellow-500" size={24} /> ¿Qué cargo quieres ocupar?
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {cargos.map((cargo) => (
-                        <button
-                            key={cargo.id}
-                            type="button"
-                            onClick={() => setSelectedCargo(cargo.id)}
-                            className={`p-6 rounded-[2rem] text-left transition-all border-4 ${selectedCargo === cargo.id ? 'bg-aqua/10 border-aqua' : 'bg-white border-white hover:border-slate-100'}`}
-                        >
-                            <input type="radio" name="cargo" value={cargo.name} checked={selectedCargo === cargo.id} className="hidden" readOnly />
-                            <p className="font-black text-xl mb-2 text-slate-800">{cargo.name}</p>
-                            <p className="text-xs text-slate-500 font-medium leading-relaxed">{cargo.mission}</p>
-                        </button>
-                    ))}
+                    {cargos.map((cargo) => {
+                        const full = isFull(cargo.name);
+                        return (
+                            <button
+                                key={cargo.id}
+                                type="button"
+                                disabled={full}
+                                onClick={() => setSelectedCargo(cargo.id)}
+                                className={`p-6 rounded-[2rem] text-left transition-all border-4 relative overflow-hidden ${full ? 'bg-slate-50 border-slate-100 opacity-60 cursor-not-allowed' : selectedCargo === cargo.id ? 'bg-aqua/10 border-aqua scale-105' : 'bg-white border-white hover:border-slate-100'}`}
+                            >
+                                {full && <div className="absolute top-2 right-2 bg-mexican-pink text-white text-[10px] font-black px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                                    <AlertCircle size={10} /> LLENO
+                                </div>}
+                                <input type="radio" name="cargo" value={cargo.name} checked={selectedCargo === cargo.id} className="hidden" readOnly disabled={full} />
+                                <p className={`font-black text-xl mb-2 ${full ? 'text-slate-400' : 'text-slate-800'}`}>{cargo.name}</p>
+                                <p className="text-xs text-slate-500 font-medium leading-relaxed">{full ? '¡Vaya! Este cargo ya está lleno, ¡intenta con otro amiguito!' : cargo.mission}</p>
+                            </button>
+                        );
+                    })}
                 </div>
 
                 <AnimatePresence>
@@ -214,17 +289,24 @@ export default function RegistroForm() {
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="space-y-6 pt-4">
                             <h4 className="font-black text-mexican-pink text-xl">Escoge tu Regiduría:</h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {regidurias.map((reg) => (
-                                    <button
-                                        key={reg.id}
-                                        type="button"
-                                        onClick={() => setSelectedRegiduria(reg.id)}
-                                        className={`p-6 rounded-3xl text-left border-4 transition-all ${selectedRegiduria === reg.id ? 'bg-mexican-pink/5 border-mexican-pink' : 'bg-white border-white hover:border-slate-100'}`}
-                                    >
-                                        <p className="font-black text-slate-800">{reg.name}</p>
-                                        <p className="text-[11px] text-slate-500 font-medium">{reg.mission}</p>
-                                    </button>
-                                ))}
+                                {regidurias.map((reg) => {
+                                    const full = isFull('Regidor/a', reg.id);
+                                    return (
+                                        <button
+                                            key={reg.id}
+                                            type="button"
+                                            disabled={full}
+                                            onClick={() => setSelectedRegiduria(reg.id)}
+                                            className={`p-6 rounded-3xl text-left border-4 transition-all relative ${full ? 'bg-slate-50/50 border-slate-100 opacity-50 cursor-not-allowed' : selectedRegiduria === reg.id ? 'bg-mexican-pink/5 border-mexican-pink scale-[1.02]' : 'bg-white border-white hover:border-slate-100'}`}
+                                        >
+                                            {full && <div className="absolute top-2 right-2 text-mexican-pink font-black text-[9px] flex items-center gap-1">
+                                                <AlertCircle size={10} /> CUPOS LLENOS
+                                            </div>}
+                                            <p className={`font-black ${full ? 'text-slate-400' : 'text-slate-800'}`}>{reg.name}</p>
+                                            <p className="text-[11px] text-slate-500 font-medium">{full ? '¡Busca una misión en otra regiduría!' : reg.mission}</p>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     )}
