@@ -20,8 +20,8 @@ export default function Hero() {
       {/* Playful background elements */}
       <div className="blob top-[-10%] left-[-10%] animate-pulse" />
       <div className="blob bottom-[-10%] right-[-10%] delay-1000" />
-      
-      <motion.div 
+
+      <motion.div
         style={{ y, scale }}
         className="absolute inset-0 z-0"
       >
@@ -34,7 +34,7 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-soft-bg/50 to-soft-bg" />
       </motion.div>
-      
+
       <div className="relative z-10 text-center px-4 max-w-5xl">
         <motion.div
           initial={{ rotate: -5, scale: 0 }}
@@ -45,7 +45,7 @@ export default function Hero() {
           ¡Gran Convocatoria 2026!
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -54,14 +54,14 @@ export default function Hero() {
           <span className="text-aqua drop-shadow-sm">Cabildo</span> <br />
           <span className="text-mexican-pink drop-shadow-sm italic">Infantil</span>
         </motion.h1>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-3xl text-slate-700 mb-10 max-w-3xl mx-auto font-medium"
         >
-          “Voces Pequeñas, y grandes Decisiones: Juntos construimos nuestro municipio.”
+          “Voces pequeñas, y grandes ideas: Juntos construimos nuestro municipio.”
         </motion.p>
 
         <motion.div
@@ -70,7 +70,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-6"
         >
-          <a 
+          <a
             href="#registro"
             className="btn-playful px-12 py-5 rounded-[2rem] text-xl font-black flex items-center gap-3"
           >
@@ -79,8 +79,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <motion.div 
-        animate={{ y: [0, 10, 0] }} 
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer hidden md:block"
       >
