@@ -9,7 +9,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "Cabildo Infantil Papantla 2026",
-  description: "Voces Pequeñas, y grandes Decisiones: Juntos y Juntas Limaxtum construimos nuestro municipio.",
+  description: "Voces pequeñas, y grandes ideas: Juntos y Juntas Limaxtum construimos nuestro municipio.",
 };
 
 export default function RootLayout({
