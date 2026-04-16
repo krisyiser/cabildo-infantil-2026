@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "folio": "CP-2026-905",
+    "nombre": "Danna Lizzeth Trinidad Sánchez",
+    "escuela": "Primaria \"María Gutiérrez\"",
+    "grado": "6°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Ulises Trinidad García",
+    "telefono": "7841208720",
+    "ine_url": "data/uploads/CP-2026-905-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-905-constancia.jpg",
+    "fecha": "2026-04-16T22:22:09.054Z"
+  }
+]
