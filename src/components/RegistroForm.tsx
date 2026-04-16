@@ -91,6 +91,44 @@ export default function RegistroForm() {
     fetchCounts();
   }, []);
 
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 1000;
+          const MAX_HEIGHT = 1000;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          
+          // Use lower quality to ensure small payload
+          resolve(canvas.toDataURL('image/jpeg', 0.6));
+        };
+      };
+    });
+  };
+
   const isFull = (cargoName: string, regId?: number) => {
     if (cargoName === 'Regidor/a' && regId) {
         return (counts[`reg-${regId}`] || 0) >= LIMIT_PER_CARGO;
@@ -108,18 +146,16 @@ export default function RegistroForm() {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'ine' | 'constancia') => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("La imagen es muy pesada. Máximo 5MB.");
-        return;
+      setLoading(true);
+      try {
+        const compressed = await compressImage(file);
+        if (type === 'ine') setIneFile(compressed);
+        else setConstanciaFile(compressed);
+      } catch (err) {
+        alert("Error procesando imagen. Intenta con otra.");
+      } finally {
+        setLoading(false);
       }
-      
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const uri = event.target?.result as string;
-        if (type === 'ine') setIneFile(uri);
-        else setConstanciaFile(uri);
-      };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -166,7 +202,7 @@ export default function RegistroForm() {
       }
     } catch (err) {
       console.error('Submission error:', err);
-      setError('Error de conexión o datos muy pesados. Intenta con fotos más pequeñas.');
+      setError('¡Datos muy pesados! Intenta tomar fotos más estables o de menor resolución.');
     } finally {
       setLoading(false);
     }
