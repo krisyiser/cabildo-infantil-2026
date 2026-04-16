@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from 'octokit';
 
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN
-});
-
 export async function POST(request: Request) {
   try {
     const data = await request.json();
@@ -13,16 +9,23 @@ export async function POST(request: Request) {
         ine, constancia, regiduria_id, regiduria_name 
     } = data;
 
-    const owner = process.env.GITHUB_USERNAME!;
-    const repo = process.env.GITHUB_REPO!;
+    const token = process.env.GITHUB_TOKEN;
+    const owner = process.env.GITHUB_USERNAME;
+    const repo = process.env.GITHUB_REPO;
+
+    if (!token || !owner || !repo) {
+        return NextResponse.json({ success: false, error: 'Configuración de servidor incompleta.' }, { status: 500 });
+    }
+
+    const octokit = new Octokit({ auth: token });
 
     // 1. Generate Folio
-    const timestamp = Date.now();
     const folio = `CP-2026-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
     
     // 2. Upload Images to GitHub data/uploads/
     const uploadImage = async (base64: string, filename: string) => {
-        const content = base64.split(',')[1]; // Remove header
+        if (!base64 || !base64.includes(',')) return null;
+        const content = base64.split(',')[1];
         const path = `data/uploads/${folio}-${filename}`;
         
         await octokit.rest.repos.createOrUpdateFileContents({
@@ -51,11 +54,16 @@ export async function POST(request: Request) {
         path: jsonPath,
       })) as any;
 
-      const content = Buffer.from(fileData.content, 'base64').toString();
-      currentInscritos = JSON.parse(content);
-      sha = fileData.sha;
+      if (fileData && !Array.isArray(fileData)) {
+          const content = Buffer.from(fileData.content, 'base64').toString();
+          currentInscritos = JSON.parse(content);
+          sha = fileData.sha;
+      }
     } catch (error: any) {
-      if (error.status !== 404) throw error;
+      if (error.status !== 404) {
+          console.error('Error fetching JSON:', error);
+          throw error;
+      }
     }
 
     const newEntry = {
@@ -86,7 +94,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, folio });
   } catch (error: any) {
-    console.error('Error en registro:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error('Error en registro completo:', error);
+    return NextResponse.json({ success: false, error: 'Error interno del servidor. Inténtalo de nuevo.' }, { status: 500 });
   }
 }
