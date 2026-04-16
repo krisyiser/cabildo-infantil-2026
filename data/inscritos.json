@@ -12,5 +12,19 @@
     "ine_url": "data/uploads/CP-2026-905-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-905-constancia.jpg",
     "fecha": "2026-04-16T22:22:09.054Z"
+  },
+  {
+    "folio": "CP-2026-693",
+    "nombre": "Sali Hernández ",
+    "escuela": "Trejo",
+    "grado": "6°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Beben",
+    "telefono": "7848489790",
+    "ine_url": "data/uploads/CP-2026-693-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-693-constancia.jpg",
+    "fecha": "2026-04-16T22:39:00.959Z"
   }
 ]
