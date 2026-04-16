@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from 'octokit';
 
+// Aumentar el límite de tamaño para el cuerpo de la petición (App Router)
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
@@ -95,6 +104,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, folio });
   } catch (error: any) {
     console.error('Error en registro completo:', error);
-    return NextResponse.json({ success: false, error: 'Error interno del servidor. Inténtalo de nuevo.' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Error interno o fotos muy pesadas.' }, { status: 500 });
   }
 }
