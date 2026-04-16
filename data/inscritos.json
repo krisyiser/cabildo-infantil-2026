@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "folio": "CP-2026-860",
+    "nombre": "Test",
+    "escuela": "Test",
+    "grado": "5",
+    "cargo": "Alcalde/sa",
+    "tutor": "Test",
+    "telefono": "1234567890",
+    "ine_url": "data/uploads/CP-2026-860-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-860-constancia.jpg",
+    "fecha": "2026-04-16T22:12:10.811Z"
+  }
+]
