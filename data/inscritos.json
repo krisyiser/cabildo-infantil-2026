@@ -54,5 +54,19 @@
     "ine_url": "data/uploads/CP-2026-391-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-391-constancia.jpg",
     "fecha": "2026-04-17T15:49:02.983Z"
+  },
+  {
+    "folio": "CP-2026-878",
+    "nombre": "DYLAN OMAR LUNA SOLANO",
+    "escuela": "JOSEFA DOMINGUEZ VIADANA",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "YERALDI SOLANO MUÑOZ",
+    "telefono": "7841174103",
+    "ine_url": "data/uploads/CP-2026-878-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-878-constancia.jpg",
+    "fecha": "2026-04-17T16:25:10.983Z"
   }
 ]
