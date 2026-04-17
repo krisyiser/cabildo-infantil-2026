@@ -26,5 +26,19 @@
     "ine_url": "data/uploads/CP-2026-693-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-693-constancia.jpg",
     "fecha": "2026-04-16T22:39:00.959Z"
+  },
+  {
+    "folio": "CP-2026-157",
+    "nombre": "Tsidkenu Salazar Antonio ",
+    "escuela": "Primaria indígena Lic. Miguel aleman",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Guadalupe Antonio Jiménez ",
+    "telefono": "7848492799",
+    "ine_url": "data/uploads/CP-2026-157-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-157-constancia.jpg",
+    "fecha": "2026-04-17T13:39:32.601Z"
   }
 ]
