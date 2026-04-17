@@ -40,5 +40,19 @@
     "ine_url": "data/uploads/CP-2026-157-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-157-constancia.jpg",
     "fecha": "2026-04-17T13:39:32.601Z"
+  },
+  {
+    "folio": "CP-2026-391",
+    "nombre": "Diego de Jesús Santiago García ",
+    "escuela": "Escuela primaria indígena Benito Juárez García ",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Lizeth Filomena García Cabrera ",
+    "telefono": "7841055032",
+    "ine_url": "data/uploads/CP-2026-391-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-391-constancia.jpg",
+    "fecha": "2026-04-17T15:49:02.983Z"
   }
 ]
