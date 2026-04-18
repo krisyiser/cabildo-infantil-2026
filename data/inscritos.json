@@ -68,5 +68,19 @@
     "ine_url": "data/uploads/CP-2026-878-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-878-constancia.jpg",
     "fecha": "2026-04-17T16:25:10.983Z"
+  },
+  {
+    "folio": "CP-2026-311",
+    "nombre": "Juan José De Mata Angeles ",
+    "escuela": "Lic. Benito Juarez Garcia.  5°",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Graciela Angeles Cervantes",
+    "telefono": "7841240471",
+    "ine_url": "data/uploads/CP-2026-311-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-311-constancia.jpg",
+    "fecha": "2026-04-18T02:20:51.164Z"
   }
 ]
