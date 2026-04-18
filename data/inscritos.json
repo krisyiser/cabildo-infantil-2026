@@ -82,5 +82,19 @@
     "ine_url": "data/uploads/CP-2026-311-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-311-constancia.jpg",
     "fecha": "2026-04-18T02:20:51.164Z"
+  },
+  {
+    "folio": "CP-2026-365",
+    "nombre": "Samuel Flores Salome",
+    "escuela": "Lic. Benito Juárez García ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 5,
+    "regiduria_name": "Regidor/a Quinto/a",
+    "tutor": "Adorahim Salomé García ",
+    "telefono": "7841441486",
+    "ine_url": "data/uploads/CP-2026-365-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-365-constancia.jpg",
+    "fecha": "2026-04-18T02:36:36.835Z"
   }
 ]
