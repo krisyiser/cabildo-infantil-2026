@@ -124,5 +124,19 @@
     "ine_url": "data/uploads/CP-2026-776-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-776-constancia.jpg",
     "fecha": "2026-04-21T14:25:37.718Z"
+  },
+  {
+    "folio": "CP-2026-174",
+    "nombre": "Emily Sheccid Hernández Santes ",
+    "escuela": "Francisco Javier Mina 5to grado ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 9,
+    "regiduria_name": "Regidor/a Noveno/a",
+    "tutor": "David Angel Hernández Morales ",
+    "telefono": "7841339653",
+    "ine_url": "data/uploads/CP-2026-174-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-174-constancia.jpg",
+    "fecha": "2026-04-21T19:12:31.628Z"
   }
 ]
