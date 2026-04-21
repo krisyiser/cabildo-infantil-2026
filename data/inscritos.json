@@ -96,5 +96,19 @@
     "ine_url": "data/uploads/CP-2026-365-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-365-constancia.jpg",
     "fecha": "2026-04-18T02:36:36.835Z"
+  },
+  {
+    "folio": "CP-2026-712",
+    "nombre": "Cristopher Alí Hernández Gil",
+    "escuela": "Josefa Domínguez Viadana ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 6,
+    "regiduria_name": "Regidor/a Sexto/a",
+    "tutor": "Teresa Vicenta Gil Olarte",
+    "telefono": "7841227829",
+    "ine_url": "data/uploads/CP-2026-712-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-712-constancia.jpg",
+    "fecha": "2026-04-21T03:34:39.001Z"
   }
 ]
