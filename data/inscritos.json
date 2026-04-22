@@ -543,5 +543,19 @@
     "ine_url": "data/uploads/CP-2026-940-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-940-constancia.jpg",
     "fecha": "2026-04-22T21:23:45.474Z"
+  },
+  {
+    "folio": "CP-2026-659",
+    "nombre": "Angel Tadeo Lopez Posadas",
+    "escuela": "Lic. Benito Juárez Garcia,",
+    "grado": "6°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Julia Posadas Martinez",
+    "telefono": "7841338819",
+    "ine_url": "data/uploads/CP-2026-659-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-659-constancia.jpg",
+    "fecha": "2026-04-22T23:15:32.238Z"
   }
 ]
