@@ -529,5 +529,19 @@
     "ine_url": "data/uploads/CP-2026-957-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-957-constancia.jpg",
     "fecha": "2026-04-22T20:08:23.132Z"
+  },
+  {
+    "folio": "CP-2026-906",
+    "nombre": "Mauro Emiliano Atzin García ",
+    "escuela": "Escuela Primaria Ignacio Zaragoza, 6º A",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 9,
+    "regiduria_name": "Regidor/a Noveno/a",
+    "tutor": "Diana Laura Atzin García ",
+    "telefono": "7841235606",
+    "ine_url": "data/uploads/CP-2026-906-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-906-constancia.jpg",
+    "fecha": "2026-04-22T21:16:23.667Z"
   }
 ]
