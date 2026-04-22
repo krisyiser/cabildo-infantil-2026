@@ -334,5 +334,19 @@
     "ine_url": "data/uploads/CP-2026-895-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-895-constancia.jpg",
     "fecha": "2026-04-22T19:50:56.414Z"
+  },
+  {
+    "folio": "CP-2026-668",
+    "nombre": "Nimbe Yaretzy Jiménez Olmedo",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 1,
+    "regiduria_name": "Regidor/a Primero/a",
+    "tutor": "Tabita Olmedo Santiago ",
+    "telefono": "7841394114",
+    "ine_url": "data/uploads/CP-2026-668-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-668-constancia.jpg",
+    "fecha": "2026-04-22T19:51:52.738Z"
   }
 ]
