@@ -1,6 +1,39 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from 'octokit';
 
+export async function GET() {
+  try {
+    const token = process.env.GITHUB_TOKEN;
+    const owner = process.env.GITHUB_USERNAME;
+    const repo = process.env.GITHUB_REPO;
+
+    if (!token || !owner || !repo) {
+      return NextResponse.json({ success: false, error: 'Configuración incompleta.' }, { status: 500 });
+    }
+
+    const octokit = new Octokit({ auth: token });
+    const jsonPath = 'data/inscritos.json';
+
+    const { data: fileData } = (await octokit.rest.repos.getContent({
+      owner,
+      repo,
+      path: jsonPath,
+      headers: {
+        'cache-control': 'no-cache',
+        'if-none-match': ''
+      }
+    })) as any;
+
+    const content = Buffer.from(fileData.content, 'base64').toString();
+    const inscritos = JSON.parse(content);
+
+    return NextResponse.json(inscritos);
+  } catch (error: any) {
+    console.error('Error fetching data:', error);
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
 export async function PATCH(request: Request) {
   try {
     const data = await request.json();
@@ -25,6 +58,10 @@ export async function PATCH(request: Request) {
       owner: owner as string,
       repo: repo as string,
       path: jsonPath,
+      headers: {
+        'cache-control': 'no-cache',
+        'if-none-match': ''
+      }
     })) as any;
 
     const content = Buffer.from(fileData.content, 'base64').toString();

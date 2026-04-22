@@ -18,18 +18,13 @@ export default function AdminDashboard() {
     else setLoading(true);
     
     try {
-      const owner = "krisyiser";
-      const repo = "cabildo-infantil-2026";
-      const path = 'data/inscritos.json';
-      
-      const cacheBuster = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
-      const response = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?v=${cacheBuster}`);
+      const response = await fetch('/api/admin');
       
       if (response.ok) {
         const data = await response.json();
         setInscritos(Array.isArray(data) ? [...data].reverse() : []);
       } else {
-        console.error('Failed to fetch from GitHub Raw');
+        console.error('Failed to fetch admin data');
       }
     } catch (error) {
       console.error('Error fetching admin data:', error);
