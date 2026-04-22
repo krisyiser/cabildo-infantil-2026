@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Loader2, PartyPopper, User, School, Award, Camera, CheckCircle2, ShieldCheck, Info, X, AlertCircle, Heart } from 'lucide-react';
