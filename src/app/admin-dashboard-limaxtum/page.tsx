@@ -1,13 +1,17 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { RefreshCw, Star, FileImage, ExternalLink, Calendar, Search } from 'lucide-react';
+import { RefreshCw, Star, FileImage, ExternalLink, Calendar, Search, Trash2, Edit, X, Save } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [inscritos, setInscritos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Edit Modal State
+  const [editingItem, setEditingItem] = useState<any | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchData = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
@@ -18,13 +22,12 @@ export default function AdminDashboard() {
       const repo = "cabildo-infantil-2026";
       const path = 'data/inscritos.json';
       
-      // Use timestamp AND random string to beat GitHub's raw cache which is aggressive
       const cacheBuster = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
       const response = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?v=${cacheBuster}`);
       
       if (response.ok) {
         const data = await response.json();
-        setInscritos(Array.isArray(data) ? data.reverse() : []);
+        setInscritos(Array.isArray(data) ? [...data].reverse() : []);
       } else {
         console.error('Failed to fetch from GitHub Raw');
       }
@@ -39,6 +42,52 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleDelete = async (folio: string) => {
+    if (!confirm(`¿Estás seguro de que deseas eliminar el registro ${folio}?`)) return;
+
+    try {
+      const response = await fetch(`/api/admin?folio=${folio}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (data.success) {
+        alert('Registro eliminado correctamente');
+        fetchData(true);
+      } else {
+        alert('Error al eliminar: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error deleting:', error);
+      alert('Error de conexión al eliminar');
+    }
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingItem) return;
+    
+    setIsUpdating(true);
+    try {
+      const response = await fetch('/api/admin', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingItem),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setEditingItem(null);
+        fetchData(true);
+      } else {
+        alert('Error al actualizar: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error updating:', error);
+      alert('Error de conexión al actualizar');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const getImagePath = (path: string) => {
     if (!path) return '#';
@@ -66,7 +115,6 @@ export default function AdminDashboard() {
           </div>
           
           <div className="flex flex-wrap items-center gap-4">
-            {/* Search Bar */}
             <div className="relative">
                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
                 <input 
@@ -104,13 +152,14 @@ export default function AdminDashboard() {
                   <th className="p-6">Cargo / Comisión</th>
                   <th className="p-6">Documentos</th>
                   <th className="p-6">Tutor / Tel</th>
+                  <th className="p-6">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {loading ? (
-                  <tr><td colSpan={5} className="p-24 text-center text-slate-300 font-black animate-pulse">CARGANDO REGISTROS...</td></tr>
+                  <tr><td colSpan={6} className="p-24 text-center text-slate-300 font-black animate-pulse">CARGANDO REGISTROS...</td></tr>
                 ) : filteredInscritos.length === 0 ? (
-                  <tr><td colSpan={5} className="p-24 text-center text-slate-300 font-black italic">
+                  <tr><td colSpan={6} className="p-24 text-center text-slate-300 font-black italic">
                       {searchTerm ? '¡NO SE ENCONTRARON RESULTADOS!' : '¡AÚN NO HAY REGISTROS!'}
                   </td></tr>
                 ) : (
@@ -154,6 +203,24 @@ export default function AdminDashboard() {
                          <p className="text-sm font-black text-slate-700">{item.tutor}</p>
                          <p className="text-xs font-bold text-slate-400 font-mono">{item.telefono}</p>
                       </td>
+                      <td className="p-6">
+                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button 
+                                onClick={() => setEditingItem(item)}
+                                className="p-2 bg-amber-50 text-amber-500 rounded-lg hover:bg-amber-500 hover:text-white transition-all"
+                                title="Editar"
+                            >
+                                <Edit size={18} />
+                            </button>
+                            <button 
+                                onClick={() => handleDelete(item.folio)}
+                                className="p-2 bg-rose-50 text-rose-500 rounded-lg hover:bg-rose-500 hover:text-white transition-all"
+                                title="Eliminar"
+                            >
+                                <Trash2 size={18} />
+                            </button>
+                        </div>
+                      </td>
                     </tr>
                   ))
                 )}
@@ -162,6 +229,110 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editingItem && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-[2.5rem] w-full max-w-2xl shadow-2xl overflow-hidden border-4 border-white">
+                <div className="bg-slate-50 p-8 flex justify-between items-center border-b border-slate-100">
+                    <div>
+                        <h2 className="text-2xl font-black text-slate-900">Editar Aspirante</h2>
+                        <p className="text-mexican-pink font-black text-sm">{editingItem.folio}</p>
+                    </div>
+                    <button 
+                        onClick={() => setEditingItem(null)}
+                        className="w-10 h-10 bg-white border-2 border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-rose-500 hover:border-rose-100 transition-all shadow-sm"
+                    >
+                        <X size={20} />
+                    </button>
+                </div>
+
+                <form onSubmit={handleUpdate} className="p-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nombre Completo</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.nombre}
+                                onChange={(e) => setEditingItem({...editingItem, nombre: e.target.value})}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Escuela</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.escuela}
+                                onChange={(e) => setEditingItem({...editingItem, escuela: e.target.value})}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Tutor</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.tutor}
+                                onChange={(e) => setEditingItem({...editingItem, tutor: e.target.value})}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Teléfono</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.telefono}
+                                onChange={(e) => setEditingItem({...editingItem, telefono: e.target.value})}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Cargo</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.cargo}
+                                onChange={(e) => setEditingItem({...editingItem, cargo: e.target.value})}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Grado</label>
+                            <input 
+                                type="text"
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-3 font-bold text-slate-700 outline-none focus:border-aqua transition-all"
+                                value={editingItem.grado}
+                                onChange={(e) => setEditingItem({...editingItem, grado: e.target.value})}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                        <button 
+                            type="button"
+                            onClick={() => setEditingItem(null)}
+                            className="flex-1 bg-slate-100 text-slate-500 font-black py-4 rounded-2xl hover:bg-slate-200 transition-all uppercase tracking-widest text-xs"
+                        >
+                            Cancelar
+                        </button>
+                        <button 
+                            type="submit"
+                            disabled={isUpdating}
+                            className="flex-3 bg-aqua text-white font-black py-4 rounded-2xl hover:bg-opacity-90 transition-all shadow-lg shadow-aqua/20 flex items-center justify-center gap-2 uppercase tracking-widest text-xs disabled:opacity-50"
+                        >
+                            {isUpdating ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+                            {isUpdating ? 'Guardando...' : 'Guardar Cambios'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      )}
     </div>
   );
 }
+

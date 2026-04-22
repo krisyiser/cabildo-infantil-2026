@@ -57,10 +57,15 @@ export async function POST(request: Request) {
     let sha = '';
 
     try {
+      // Usar un timestamp en la petición para evitar caché de la API de GitHub
       const { data: fileData } = (await octokit.rest.repos.getContent({
         owner,
         repo,
         path: jsonPath,
+        headers: {
+          'cache-control': 'no-cache',
+          'if-none-match': ''
+        }
       })) as any;
 
       if (fileData && !Array.isArray(fileData)) {

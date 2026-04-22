@@ -64,32 +64,43 @@ export default function RegistroForm() {
   const [constanciaFile, setConstanciaFile] = useState<string | null>(null);
   const [legalId, setLegalId] = useState<'imagen' | 'consentimiento' | null>(null);
 
-  useEffect(() => {
-    async function fetchCounts() {
-      try {
-        const owner = "krisyiser";
-        const repo = "cabildo-infantil-2026";
-        const path = 'data/inscritos.json';
-        const res = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`);
-        if (res.ok) {
-          const data = await res.json();
-          const newCounts: { [key: string]: number } = {};
-          if (Array.isArray(data)) {
-            data.forEach((item: any) => {
-              const key = item.cargo === 'Regidor/a' ? `reg-${item.regiduria_id}` : item.cargo;
-              newCounts[key] = (newCounts[key] || 0) + 1;
-            });
-          }
-          setCounts(newCounts);
+  const fetchCounts = useCallback(async () => {
+    try {
+      const owner = "krisyiser";
+      const repo = "cabildo-infantil-2026";
+      const path = 'data/inscritos.json';
+      const res = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`);
+      if (res.ok) {
+        const data = await res.json();
+        const newCounts: { [key: string]: number } = {};
+        if (Array.isArray(data)) {
+          data.forEach((item: any) => {
+            const key = item.cargo === 'Regidor/a' ? `reg-${item.regiduria_id}` : item.cargo;
+            newCounts[key] = (newCounts[key] || 0) + 1;
+          });
         }
-      } catch (err) {
-        console.error("Error fetching counts:", err);
-      } finally {
-        setInitialLoading(false);
+        setCounts(newCounts);
       }
+    } catch (err) {
+      console.error("Error fetching counts:", err);
+    } finally {
+      setInitialLoading(false);
     }
-    fetchCounts();
   }, []);
+
+  useEffect(() => {
+    fetchCounts();
+  }, [fetchCounts]);
+
+  const handleReset = () => {
+    setSuccess(null);
+    setError(null);
+    setSelectedCargo('');
+    setSelectedRegiduria(null);
+    setIneFile(null);
+    setConstanciaFile(null);
+    fetchCounts(); // Actualizar cupos para el siguiente registro
+  };
 
   const compressImage = (file: File): Promise<string> => {
     return new Promise((resolve) => {
@@ -240,7 +251,7 @@ export default function RegistroForm() {
             <p className="text-xs text-aqua uppercase font-black tracking-widest mb-2">Tu número de folio oficial:</p>
             <p className="text-6xl font-mono font-black text-slate-800">{success}</p>
           </div>
-          <button onClick={() => { setSuccess(null); setSelectedCargo(''); setIneFile(null); setConstanciaFile(null); }} className="mt-10 text-mexican-pink font-black underline underline-offset-8">Registrar otro niño/a</button>
+          <button onClick={handleReset} className="mt-10 text-mexican-pink font-black underline underline-offset-8">Registrar otro niño/a</button>
         </motion.div>
       </div>
     );
