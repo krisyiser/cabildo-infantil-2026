@@ -222,5 +222,19 @@
     "ine_url": "data/uploads/CP-2026-017-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-017-constancia.jpg",
     "fecha": "2026-04-22T02:40:45.004Z"
+  },
+  {
+    "folio": "CP-2026-444",
+    "nombre": "LAURA JAZMIN DE LUNA SANTES",
+    "escuela": "JUAN DE LA LUZ ENRIQUEZ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 9,
+    "regiduria_name": "Regidor/a Noveno/a",
+    "tutor": "CINTHIA MORALES PEREZ",
+    "telefono": "7831372431",
+    "ine_url": "data/uploads/CP-2026-444-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-444-constancia.jpg",
+    "fecha": "2026-04-22T02:44:06.300Z"
   }
 ]
