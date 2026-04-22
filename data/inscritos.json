@@ -515,5 +515,19 @@
     "ine_url": "data/uploads/CP-2026-880-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-880-constancia.jpg",
     "fecha": "2026-04-22T20:07:25.165Z"
+  },
+  {
+    "folio": "CP-2026-957",
+    "nombre": "Johana Lizath Domínguez Mendoza ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 7,
+    "regiduria_name": "Regidor/a Séptimo/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841080674",
+    "ine_url": "data/uploads/CP-2026-957-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-957-constancia.jpg",
+    "fecha": "2026-04-22T20:08:23.132Z"
   }
 ]
