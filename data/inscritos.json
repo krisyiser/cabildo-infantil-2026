@@ -389,5 +389,19 @@
     "ine_url": "data/uploads/CP-2026-361-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-361-constancia.jpg",
     "fecha": "2026-04-22T19:55:21.097Z"
+  },
+  {
+    "folio": "CP-2026-336",
+    "nombre": "Luis Fernando García Hernández",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 10,
+    "regiduria_name": "Regidor/a Décimo/a",
+    "tutor": "Tabita Olmedo Santiago ",
+    "telefono": "7841394114",
+    "ine_url": "data/uploads/CP-2026-336-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-336-constancia.jpg",
+    "fecha": "2026-04-22T19:56:13.269Z"
   }
 ]
