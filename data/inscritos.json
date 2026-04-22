@@ -236,5 +236,19 @@
     "ine_url": "data/uploads/CP-2026-444-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-444-constancia.jpg",
     "fecha": "2026-04-22T02:44:06.300Z"
+  },
+  {
+    "folio": "CP-2026-302",
+    "nombre": "MANUEL  ALEJANDRO GARCIA VILLANUEVA",
+    "escuela": "JOSEFA DOMINGUEZ VIADANA",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 4,
+    "regiduria_name": "Regidor/a Cuarto/a",
+    "tutor": "EUNICE ESCOBAR RODRIGUEZ",
+    "telefono": "7841268911",
+    "ine_url": "data/uploads/CP-2026-302-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-302-constancia.jpg",
+    "fecha": "2026-04-22T02:46:42.994Z"
   }
 ]
