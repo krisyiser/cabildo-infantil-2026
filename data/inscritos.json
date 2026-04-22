@@ -375,5 +375,19 @@
     "ine_url": "data/uploads/CP-2026-953-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-953-constancia.jpg",
     "fecha": "2026-04-22T19:53:48.715Z"
+  },
+  {
+    "folio": "CP-2026-361",
+    "nombre": "Lila Militza Hernández Vences",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 10,
+    "regiduria_name": "Regidor/a Décimo/a",
+    "tutor": "Dulce Natalia De Luna Pérez ",
+    "telefono": "7841394114",
+    "ine_url": "data/uploads/CP-2026-361-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-361-constancia.jpg",
+    "fecha": "2026-04-22T19:55:21.097Z"
   }
 ]
