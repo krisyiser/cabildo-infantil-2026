@@ -543,5 +543,19 @@
     "ine_url": "data/uploads/CP-2026-906-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-906-constancia.jpg",
     "fecha": "2026-04-22T21:16:23.667Z"
+  },
+  {
+    "folio": "CP-2026-940",
+    "nombre": "Andrea Abigail Jiménez Cruz ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 7,
+    "regiduria_name": "Regidor/a Séptimo/a",
+    "tutor": "Eunice Marina Escobar Martínez ",
+    "telefono": "7841268911",
+    "ine_url": "data/uploads/CP-2026-940-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-940-constancia.jpg",
+    "fecha": "2026-04-22T21:23:45.474Z"
   }
 ]
