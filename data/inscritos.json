@@ -194,5 +194,19 @@
     "ine_url": "data/uploads/CP-2026-938-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-938-constancia.jpg",
     "fecha": "2026-04-22T02:30:14.135Z"
+  },
+  {
+    "folio": "CP-2026-173",
+    "nombre": "ALEXA SAAVEDRA RAMÍREZ ",
+    "escuela": "LIC. BENITO JUÁREZ GARCÍA / 5°",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "ALEYDA RAMÍREZ CRUZ ",
+    "telefono": "7841070428",
+    "ine_url": "data/uploads/CP-2026-173-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-173-constancia.jpg",
+    "fecha": "2026-04-22T02:38:26.698Z"
   }
 ]
