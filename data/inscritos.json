@@ -473,5 +473,19 @@
     "ine_url": "data/uploads/CP-2026-750-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-750-constancia.jpg",
     "fecha": "2026-04-22T20:04:06.557Z"
+  },
+  {
+    "folio": "CP-2026-751",
+    "nombre": "Eyra Samara Cerededo ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 8,
+    "regiduria_name": "Regidor/a Octavo/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841080674",
+    "ine_url": "data/uploads/CP-2026-751-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-751-constancia.jpg",
+    "fecha": "2026-04-22T20:05:08.138Z"
   }
 ]
