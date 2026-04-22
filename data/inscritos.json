@@ -431,5 +431,19 @@
     "ine_url": "data/uploads/CP-2026-678-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-678-constancia.jpg",
     "fecha": "2026-04-22T20:01:04.518Z"
+  },
+  {
+    "folio": "CP-2026-393",
+    "nombre": "José Erick Hernández Ramírez ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 6,
+    "regiduria_name": "Regidor/a Sexto/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841080674",
+    "ine_url": "data/uploads/CP-2026-393-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-393-constancia.jpg",
+    "fecha": "2026-04-22T20:02:03.091Z"
   }
 ]
