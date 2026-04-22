@@ -250,5 +250,19 @@
     "ine_url": "data/uploads/CP-2026-302-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-302-constancia.jpg",
     "fecha": "2026-04-22T02:46:42.994Z"
+  },
+  {
+    "folio": "CP-2026-367",
+    "nombre": "Daniel Salvador Olarte Perez ",
+    "escuela": "Ignacio Zaragoza Vespertino ",
+    "grado": "6°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Zaira Angélica  Pérez Licona ",
+    "telefono": " 784 124 2795",
+    "ine_url": "data/uploads/CP-2026-367-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-367-constancia.jpg",
+    "fecha": "2026-04-22T11:30:21.075Z"
   }
 ]
