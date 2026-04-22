@@ -403,5 +403,19 @@
     "ine_url": "data/uploads/CP-2026-336-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-336-constancia.jpg",
     "fecha": "2026-04-22T19:56:13.269Z"
+  },
+  {
+    "folio": "CP-2026-562",
+    "nombre": "José Francisco García García ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 1,
+    "regiduria_name": "Regidor/a Primero/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841080674",
+    "ine_url": "data/uploads/CP-2026-562-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-562-constancia.jpg",
+    "fecha": "2026-04-22T20:00:01.604Z"
   }
 ]
