@@ -348,5 +348,18 @@
     "ine_url": "data/uploads/CP-2026-668-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-668-constancia.jpg",
     "fecha": "2026-04-22T19:51:52.738Z"
+  },
+  {
+    "folio": "CP-2026-092",
+    "nombre": "Luis Jafeth Vázquez Lara",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "regiduria_id": 1,
+    "regiduria_name": "Regidor/a Primero/a",
+    "tutor": "Tabita Olmedo Santiago ",
+    "telefono": "7841394114",
+    "ine_url": "data/uploads/CP-2026-092-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-092-constancia.jpg",
+    "fecha": "2026-04-22T19:52:41.927Z"
   }
 ]
