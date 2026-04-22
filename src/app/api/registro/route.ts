@@ -2,13 +2,8 @@ import { NextResponse } from 'next/server';
 import { Octokit } from 'octokit';
 
 // Aumentar el límite de tamaño para el cuerpo de la petición (App Router)
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+// Nota: En App Router la configuración se maneja de forma distinta, 
+// este export const config era para Pages Router y genera advertencias.
 
 export async function POST(request: Request) {
   try {

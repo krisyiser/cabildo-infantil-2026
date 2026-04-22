@@ -22,8 +22,8 @@ export async function PATCH(request: Request) {
     const jsonPath = 'data/inscritos.json';
 
     const { data: fileData } = (await octokit.rest.repos.getContent({
-      owner,
-      repo,
+      owner: owner as string,
+      repo: repo as string,
       path: jsonPath,
     })) as any;
 
@@ -40,8 +40,8 @@ export async function PATCH(request: Request) {
     currentInscritos[index] = { ...currentInscritos[index], ...updates };
 
     await octokit.rest.repos.createOrUpdateFileContents({
-      owner,
-      repo,
+      owner: owner as string,
+      repo: repo as string,
       path: jsonPath,
       message: `Actualización de registro: ${folio}`,
       content: Buffer.from(JSON.stringify(currentInscritos, null, 2)).toString('base64'),
@@ -68,12 +68,16 @@ export async function DELETE(request: Request) {
     const owner = process.env.GITHUB_USERNAME;
     const repo = process.env.GITHUB_REPO;
 
+    if (!token || !owner || !repo) {
+      return NextResponse.json({ success: false, error: 'Configuración de servidor incompleta.' }, { status: 500 });
+    }
+
     const octokit = new Octokit({ auth: token });
     const jsonPath = 'data/inscritos.json';
 
     const { data: fileData } = (await octokit.rest.repos.getContent({
-      owner,
-      repo,
+      owner: owner as string,
+      repo: repo as string,
       path: jsonPath,
     })) as any;
 
@@ -84,8 +88,8 @@ export async function DELETE(request: Request) {
     const updatedInscritos = currentInscritos.filter((item: any) => item.folio !== folio);
 
     await octokit.rest.repos.createOrUpdateFileContents({
-      owner,
-      repo,
+      owner: owner as string,
+      repo: repo as string,
       path: jsonPath,
       message: `Eliminación de registro: ${folio}`,
       content: Buffer.from(JSON.stringify(updatedInscritos, null, 2)).toString('base64'),
