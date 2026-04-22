@@ -501,5 +501,19 @@
     "ine_url": "data/uploads/CP-2026-733-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-733-constancia.jpg",
     "fecha": "2026-04-22T20:06:14.676Z"
+  },
+  {
+    "folio": "CP-2026-880",
+    "nombre": "Mariana Alpirez Sandoval ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 10,
+    "regiduria_name": "Regidor/a Décimo/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841394114",
+    "ine_url": "data/uploads/CP-2026-880-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-880-constancia.jpg",
+    "fecha": "2026-04-22T20:07:25.165Z"
   }
 ]
