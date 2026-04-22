@@ -264,5 +264,19 @@
     "ine_url": "data/uploads/CP-2026-367-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-367-constancia.jpg",
     "fecha": "2026-04-22T11:30:21.075Z"
+  },
+  {
+    "folio": "CP-2026-109",
+    "nombre": "Ángela Juliet López Morales ",
+    "escuela": "Francisco Javier Mina 5to grado ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 7,
+    "regiduria_name": "Regidor/a Séptimo/a",
+    "tutor": "Angelina Morales Díaz ",
+    "telefono": "7841415076",
+    "ine_url": "data/uploads/CP-2026-109-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-109-constancia.jpg",
+    "fecha": "2026-04-22T17:21:04.741Z"
   }
 ]
