@@ -1,3 +1,4 @@
+// Trigger deploy for Netlify - 2026-04-22
 import Hero from "@/components/Hero";
 import Bases from "@/components/Bases";
 import RegistroForm from "@/components/RegistroForm";
