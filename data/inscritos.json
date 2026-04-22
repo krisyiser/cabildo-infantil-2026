@@ -320,5 +320,19 @@
     "ine_url": "data/uploads/CP-2026-339-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-339-constancia.jpg",
     "fecha": "2026-04-22T19:44:27.382Z"
+  },
+  {
+    "folio": "CP-2026-895",
+    "nombre": "MIGUEL ANGEL GARCIA VICENTE",
+    "escuela": "CONCEPCION FUENTE MATUTINA",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "LUCIA VICENTE SALAZAR",
+    "telefono": "7841058466",
+    "ine_url": "data/uploads/CP-2026-895-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-895-constancia.jpg",
+    "fecha": "2026-04-22T19:50:56.414Z"
   }
 ]
