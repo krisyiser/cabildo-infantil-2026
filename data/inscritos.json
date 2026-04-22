@@ -445,5 +445,19 @@
     "ine_url": "data/uploads/CP-2026-393-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-393-constancia.jpg",
     "fecha": "2026-04-22T20:02:03.091Z"
+  },
+  {
+    "folio": "CP-2026-493",
+    "nombre": "Rubén Sthepan Lomomglia ",
+    "escuela": " Josefa Domínguez Vadiana",
+    "grado": "6°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 4,
+    "regiduria_name": "Regidor/a Cuarto/a",
+    "tutor": "Adolfo Mera Reyes ",
+    "telefono": "7841080674",
+    "ine_url": "data/uploads/CP-2026-493-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-493-constancia.jpg",
+    "fecha": "2026-04-22T20:03:08.116Z"
   }
 ]
