@@ -278,5 +278,19 @@
     "ine_url": "data/uploads/CP-2026-109-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-109-constancia.jpg",
     "fecha": "2026-04-22T17:21:04.741Z"
+  },
+  {
+    "folio": "CP-2026-020",
+    "nombre": "Liam Isai Xochihua Cortés",
+    "escuela": "Concepción Fuente 5°",
+    "grado": "5°",
+    "cargo": "Alcalde/sa",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Araceli Cortés Vicencio",
+    "telefono": "7841342284",
+    "ine_url": "data/uploads/CP-2026-020-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-020-constancia.jpg",
+    "fecha": "2026-04-22T18:51:41.806Z"
   }
 ]
