@@ -166,5 +166,19 @@
     "ine_url": "data/uploads/CP-2026-397-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-397-constancia.jpg",
     "fecha": "2026-04-22T02:02:28.193Z"
+  },
+  {
+    "folio": "CP-2026-946",
+    "nombre": "Tania Michelle Vega santes",
+    "escuela": "Juan de la luz enriquez",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 11,
+    "regiduria_name": "Regidor/a Décimo/a primero/a",
+    "tutor": "Cinthia Lizbeth Morales perez",
+    "telefono": "7831372431",
+    "ine_url": "data/uploads/CP-2026-946-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-946-constancia.jpg",
+    "fecha": "2026-04-22T02:26:13.875Z"
   }
 ]
