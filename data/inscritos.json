@@ -152,5 +152,19 @@
     "ine_url": "data/uploads/CP-2026-715-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-715-constancia.jpg",
     "fecha": "2026-04-21T19:59:43.974Z"
+  },
+  {
+    "folio": "CP-2026-397",
+    "nombre": "Galeote  Alatriste  Brisa Yazmin",
+    "escuela": "Salvador díaz Miron",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 3,
+    "regiduria_name": "Regidor/a Tercero/a",
+    "tutor": "Ramirez Moreno Lorenza ",
+    "telefono": "7841247511",
+    "ine_url": "data/uploads/CP-2026-397-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-397-constancia.jpg",
+    "fecha": "2026-04-22T02:02:28.193Z"
   }
 ]
