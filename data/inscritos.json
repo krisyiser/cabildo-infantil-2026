@@ -529,5 +529,19 @@
     "ine_url": "data/uploads/CP-2026-659-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-659-constancia.jpg",
     "fecha": "2026-04-22T23:15:32.238Z"
+  },
+  {
+    "folio": "CP-2026-401",
+    "nombre": "Moisés Irán Bañuelos Bautista",
+    "escuela": "Concepción Fuente 6°A",
+    "grado": "5°",
+    "cargo": "Síndico/a",
+    "regiduria_id": null,
+    "regiduria_name": null,
+    "tutor": "Luz Adriana Bautista Hernández ",
+    "telefono": "7841189250",
+    "ine_url": "data/uploads/CP-2026-401-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-401-constancia.jpg",
+    "fecha": "2026-04-23T18:26:08.553Z"
   }
 ]
