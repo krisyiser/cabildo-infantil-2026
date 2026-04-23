@@ -543,5 +543,19 @@
     "ine_url": "data/uploads/CP-2026-401-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-401-constancia.jpg",
     "fecha": "2026-04-23T18:26:08.553Z"
+  },
+  {
+    "folio": "CP-2026-735",
+    "nombre": "DASHA KETZALY JUAREZ RODRIGUEZ",
+    "escuela": "CONCEPCION FUENTE, TURNO VESPERTINO",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 9,
+    "regiduria_name": "Regidor/a Noveno/a",
+    "tutor": "CLETA MAGDALENA RODRIGUEZ BARRAGAN",
+    "telefono": "784 104 4832",
+    "ine_url": "data/uploads/CP-2026-735-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-735-constancia.jpg",
+    "fecha": "2026-04-23T22:48:33.579Z"
   }
 ]
