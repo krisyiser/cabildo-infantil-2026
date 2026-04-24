@@ -613,5 +613,19 @@
     "ine_url": "data/uploads/CP-2026-264-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-264-constancia.jpg",
     "fecha": "2026-04-24T03:44:46.531Z"
+  },
+  {
+    "folio": "CP-2026-886",
+    "nombre": "MARIA JOSÉ PEREZ PEREZ",
+    "escuela": "MMMMMM",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 11,
+    "regiduria_name": "Regidor/a Décimo/a primero/a",
+    "tutor": "JOSE PEREZ MORGADO",
+    "telefono": "7841055959",
+    "ine_url": "data/uploads/CP-2026-886-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-886-constancia.jpg",
+    "fecha": "2026-04-24T03:49:35.079Z"
   }
 ]
