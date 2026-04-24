@@ -627,5 +627,19 @@
     "ine_url": "data/uploads/CP-2026-886-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-886-constancia.jpg",
     "fecha": "2026-04-24T03:49:35.079Z"
+  },
+  {
+    "folio": "CP-2026-473",
+    "nombre": "CAROLA DE MARIA GARCIA OLMEDO",
+    "escuela": "MMMMM",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 1,
+    "regiduria_name": "Regidor/a Primero/a",
+    "tutor": "JOSE PEREZ MORGADO",
+    "telefono": "7841055959",
+    "ine_url": "data/uploads/CP-2026-473-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-473-constancia.jpg",
+    "fecha": "2026-04-24T03:51:22.891Z"
   }
 ]
