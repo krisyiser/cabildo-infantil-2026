@@ -585,5 +585,19 @@
     "ine_url": "data/uploads/CP-2026-598-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-598-constancia.jpg",
     "fecha": "2026-04-24T01:06:51.820Z"
+  },
+  {
+    "folio": "CP-2026-839",
+    "nombre": "Camila Esther Pérez Juárez",
+    "escuela": "IGNACIO ZARAGOZA VESPERTINA",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 5,
+    "regiduria_name": "Regidor/a Quinto/a",
+    "tutor": "EFRAIM CONCHA HEREDIA ",
+    "telefono": "7841103235",
+    "ine_url": "data/uploads/CP-2026-839-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-839-constancia.jpg",
+    "fecha": "2026-04-24T03:31:54.480Z"
   }
 ]
