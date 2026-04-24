@@ -571,5 +571,19 @@
     "ine_url": "data/uploads/CP-2026-891-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-891-constancia.jpg",
     "fecha": "2026-04-24T01:02:20.367Z"
+  },
+  {
+    "folio": "CP-2026-598",
+    "nombre": "Elena Yamileth Olarte Reyes ",
+    "escuela": "Francisco Javier Mina 5to grado ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 6,
+    "regiduria_name": "Regidor/a Sexto/a",
+    "tutor": "Rosa Yanet Reyes López ",
+    "telefono": "7841231658",
+    "ine_url": "data/uploads/CP-2026-598-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-598-constancia.jpg",
+    "fecha": "2026-04-24T01:06:51.820Z"
   }
 ]
