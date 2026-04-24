@@ -557,5 +557,19 @@
     "ine_url": "data/uploads/CP-2026-735-ine.jpg",
     "constancia_url": "data/uploads/CP-2026-735-constancia.jpg",
     "fecha": "2026-04-23T22:48:33.579Z"
+  },
+  {
+    "folio": "CP-2026-891",
+    "nombre": "Lucia del Carmen De la Cruz Morales ",
+    "escuela": "Francisco Javier Mina 5to grado ",
+    "grado": "5°",
+    "cargo": "Regidor/a",
+    "regiduria_id": 1,
+    "regiduria_name": "Regidor/a Primero/a",
+    "tutor": "Mayra Lucecita Morales León ",
+    "telefono": "7841202406",
+    "ine_url": "data/uploads/CP-2026-891-ine.jpg",
+    "constancia_url": "data/uploads/CP-2026-891-constancia.jpg",
+    "fecha": "2026-04-24T01:02:20.367Z"
   }
 ]
